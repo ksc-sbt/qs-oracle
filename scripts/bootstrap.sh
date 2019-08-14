@@ -113,74 +113,22 @@ if [[ ${HOST_TYPE} != 'PRIMARY' && ${HOST_TYPE} != 'STANDBY' ]]; then
 fi
 
 ## Set an initial value
-QS_S3_URL='NONE'
-QS_S3_BUCKET='NONE'
-QS_S3_KEY_PREFIX='NONE'
-QS_S3_SCRIPTS_PATH='NONE'
-INSTALLER_S3_BUCKET='NONE'
+INSTALLER_S3_BUCKET='ksc-sbt-software'
 OS_CODE='NONE'
-SGA_VALUE='NONE'
-SHMALL_VALUE='NONE'
-SHMMAX_VALUE='NONE'
-DATABASE_PASS='NONE'
-ASM_PASS='NONE'
-CHARACTER_SET='NONE'
-DATABASE_PORT='NONE'
-PRIMARY_NAME='NONE'
-STANDBY_NAME='NONE'
-PRIMARY_IP='NONE'
-STANDBY_IP='NONE'
-OSB_CHOICE='NONE'
-OSB_AWS_BUCKET='NONE'
-OSB_AWS_KEY='NONE'
-OSB_AWS_SECRET='NONE'
-OSB_OTN_USER='NONE'
-OSB_OTN_PASS='NONE'
-ORACLE_VERSION='NONE'
-
-if [ -f ${PARAMS_FILE} ]; then
-    QS_S3_URL=`grep 'QuickStartS3URL' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    QS_S3_BUCKET=`grep 'QSS3Bucket' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    QS_S3_KEY_PREFIX=`grep 'QSS3KeyPrefix' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g' | sed 's/\/$//g'`
-    INSTALLER_S3_BUCKET=`grep 'InstallBucketName' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    OS_CODE=`grep 'Code' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    SGA_VALUE=`grep 'SGA' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    SHMALL_VALUE=`grep 'SHMALL' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    SHMMAX_VALUE=`grep 'SHMMAX' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    DATABASE_PASS=`grep 'DatabasePass' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    ASM_PASS=`grep 'AsmPass' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    CHARACTER_SET=`grep 'CharacterSet' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    DATABASE_PORT=`grep 'DatabasePort' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    PRIMARY_NAME=`grep 'DatabaseName' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    STANDBY_NAME=`grep 'StandbyName' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    PRIMARY_IP=`grep 'PrimaryIPAddress' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    STANDBY_IP=`grep 'StandbyIPAddress' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    OSB_CHOICE=`grep 'OSBInstall' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    OSB_AWS_BUCKET=`grep 'OSBBName' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    OSB_AWS_KEY=`grep 'OSBKey' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    OSB_AWS_SECRET=`grep 'OSBSecret' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    OSB_OTN_USER=`grep 'OSBOTN' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    OSB_OTN_PASS=`grep 'OSBPass' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-    ORACLE_VERSION=`grep 'OracleVersion' ${PARAMS_FILE} | awk -F'|' '{print $2}' | sed -e 's/^ *//g;s/ *$//g'`
-
-    # Strip leading slash
-    if [[ ${QS_S3_KEY_PREFIX} == /* ]];then
-          echo "Removing leading slash"
-          QS_S3_KEY_PREFIX=$(echo ${QS_S3_KEY_PREFIX} | sed -e 's/^\///')
-    fi
-
-    # Format S3 script path
-    QS_S3_SCRIPTS_PATH="${QS_S3_URL}/${QS_S3_BUCKET}/${QS_S3_KEY_PREFIX}/scripts"
-else
-    echo "Paramaters file not found or accessible."
-    exit 1
-fi
+SGA_VALUE='2458'
+SHMALL_VALUE='838861'
+SHMMAX_VALUE='3221225472'
+DATABASE_PASS='Passw0rd'
+ASM_PASS='Passw0rd'
+CHARACTER_SET='AL32UTF8'
+DATABASE_PORT='1525'
+PRIMARY_NAME='orcl'
+STANDBY_NAME='orclsb'
+PRIMARY_IP='10.34.0.7'
+STANDBY_IP='10.34.16.20'
+ORACLE_VERSION='12.1.0.2'
 
 if [[ ${VERBOSE} == 'true' ]]; then
-    echo "QS_S3_URL = ${QS_S3_URL}"
-    echo "QS_S3_BUCKET = ${QS_S3_BUCKET}"
-    echo "QS_S3_KEY_PREFIX = ${QS_S3_KEY_PREFIX}"
-    echo "QS_S3_SCRIPTS_PATH = ${QS_S3_SCRIPTS_PATH}"
     echo "INSTALLER_S3_BUCKET = ${INSTALLER_S3_BUCKET}"
     echo "OS_CODE = ${OS_CODE}"
     echo "SGA_VALUE = ${SGA_VALUE}"
@@ -194,13 +142,6 @@ if [[ ${VERBOSE} == 'true' ]]; then
     echo "STANDBY_NAME = ${STANDBY_NAME}"
     echo "PRIMARY_IP = ${PRIMARY_IP}"
     echo "STANDBY_IP = ${STANDBY_IP}"
-    echo "OSB_CHOICE = ${OSB_CHOICE}"
-    echo "OSB_AWS_BUCKET = ${OSB_AWS_BUCKET}"
-    echo "OSB_AWS_KEY = ${OSB_AWS_KEY}"
-    echo "OSB_AWS_SECRET = ${OSB_AWS_SECRET}"
-    echo "OSB_OTN_USER = ${OSB_OTN_USER}"
-    echo "OSB_OTN_PASS = ${OSB_OTN_PASS}"
-    echo "ORACLE_VERSION = ${ORACLE_VERSION}"
 fi
 
 
