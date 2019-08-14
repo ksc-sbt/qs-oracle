@@ -114,7 +114,7 @@ fi
 
 ## Set an initial value
 INSTALLER_S3_BUCKET='ksc-sbt-software'
-OS_CODE='NONE'
+OS_CODE='RHEL72HVM'
 SGA_VALUE='2458'
 SHMALL_VALUE='838861'
 SHMMAX_VALUE='3221225472'
@@ -226,26 +226,21 @@ mv /tmp/*.rsp /u01/install/.
 # Create and mount a Shared Filesystem between the machines to exchange controlfile and init files
 install_packages nfs-utils nfs-utils-lib
 if [[ ${HOST_TYPE} == 'PRIMARY' ]]; then
-    echo -e 'o\nn\np\n1\n\n\nw' | fdisk /dev/xvdy
     sync
-    mkdir /shared
-    chmod 777 /shared
-    mkfs -t ext4 /dev/xvdy1
-    echo '/dev/xvdy1 /shared   ext4    defaults,noatime  1   1'>>/etc/fstab
-    chmod 777 /shared
-    echo /shared ${STANDBY_IP}"(rw)" >>/etc/exports
+    mkdir /u01/shared
+    chmod 777 /u01/shared
+    echo /u01/shared ${STANDBY_IP}"(rw)" >>/etc/exports
     service rpcbind start
     service nfs start
     service nfslock start
-    mount /shared
     exportfs -a
 elif [[ ${HOST_TYPE} == 'STANDBY' ]]; then
     service rpcbind start
     service nfs start
     service nfslock start
-    mkdir /shared
+    mkdir /u01/shared
     chmod 777 /shared
-    mount -t nfs ${PRIMARY_IP}:/shared /shared
+    mount -t nfs ${PRIMARY_IP}:/u01/shared /shared
 fi
 if df -k | grep shared ; then
     echo "QS_SHARED_FS|SUCCESS"
