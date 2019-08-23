@@ -258,7 +258,7 @@ Password:
 ```
 
 ### 1.5.7 下载Oracle安装包
-通过访问Oracle网站（https://www.oracle.com/database/technologies/database12c-linux-downloads.html）可下载Oracle安装程序。为了缩短下载时间，安装包已存储在金山云对象存储上，可通过如下命令快速下载。从金山云云主机访问金山云对象存储，是通过金山云内网，下载速度能达到每秒30MB。
+通过访问Oracle网站[https://www.oracle.com/database/technologies/database12c-linux-downloads.html](https://www.oracle.com/database/technologies/database12c-linux-downloads.html)可下载Oracle安装程序。为了缩短下载时间，安装包已存储在金山云对象存储上，可通过如下命令快速下载。从金山云云主机访问金山云对象存储，是通过金山云内网，下载速度能达到每秒30MB。
 ```bash
 wget https://ks3-cn-beijing.ksyun.com/ksc-sbt-software/oracle/linuxamd64_12102_database_1of2.zip
 wget https://ks3-cn-beijing.ksyun.com/ksc-sbt-software/oracle/linuxamd64_12102_database_2of2.zip
@@ -926,6 +926,6 @@ RMAN>
 上输出得知，备份文件位于/u01/app/oracle/fast_recovery_area/ORCL_STBY/backupset/2019_08_23/目录。
 然后利用金山云对象存储数据迁移工具KS3Up-tool，可快速把备份数据导入对对象存储中，从而实现大量历史数据对归档备份。详细信息参考：[https://docs.ksyun.com/documents/895](https://docs.ksyun.com/documents/895)。
 
-#6. 小结
+# 6. 小结
 本文介绍了如何安装Oracle数据库，并利用Oracle Data Guard实现数据库服务器高可用的过程。金山云通过其云服务器、物理主机等服务器，帮助客户实现基于Oracle数据库的应用上云，或者建立云灾备环境。
 
