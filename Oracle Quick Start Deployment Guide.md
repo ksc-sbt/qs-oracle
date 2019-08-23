@@ -1,4 +1,4 @@
-基于金山云云服务部署高可用Oracle数据库服务
+如何在金山云上部署高可用Oracle数据库服务
 
 根据不同需求，基于金山云云服务器、专属云、物理主机、云硬盘和托管服务自建Oracle数据库，通过Oracle Data Guard实现高可用，实现主备数据复制、有计划切换(Switchover)和故障切换(Failover)，并利用对象存储归档数据库历史数据。具体的架构示意图如下：
 ![基于金山云的高可用Oracle数据库服务部署架构](https://raw.githubusercontent.com/ksc-sbt/qs-oracle/master/images/ksc-oracle-ha-architecture.png)
